@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.Tracing;
+using UnityEditor;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class EnemyCarController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [HideInInspector]
-    public static Vector3 position;
-    [SerializeField] float speed;
+    float speed = 30;
+   
     void Start()
     {
-
+        
+        transform.localEulerAngles = new Vector3(0, 90,0);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        position = transform.position;
+        
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
         foreach(GameObject wheel in GetWheels())
         {
             wheel.transform.Rotate(Vector3.right,Space.Self);
         }
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal"), 0, 0).normalized * speed * Time.deltaTime);
 
+        if(transform.position.x > CarController.position.x)
+        {
+            Destroy(gameObject,2);
+        } 
     }
-
     List<GameObject> GetWheels()
     {
         List<GameObject> wheels = new List<GameObject>();
