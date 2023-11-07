@@ -5,16 +5,15 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bullet,transform.position,Quaternion.identity);
+        //on space down then shoot a bullet
+        if(Input.GetKeyDown(KeyCode.Space))
+        ShootBullet();
+    }
+    void ShootBullet()
+    {
+       Instantiate(bullet, transform.position, Quaternion.identity);
     }
 }

@@ -4,31 +4,37 @@ using UnityEngine;
 
 public class EnemyGeneratorController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //a set of cars to choose from and spawn
     [SerializeField] GameObject[] enemyCars;
     [SerializeField] GameObject playerCar;
+    //Time between Spawns
     [SerializeField] float spawnDelay = 3f;
-    [SerializeField] float zDistanceFromCar = 50f;
+    //How far away will the enemycar spawn in x axis from the player
+    [SerializeField] float xDistanceFromCar = 50f;
+    //a timer for spawn delay
     float timer = 0;
-    void Start()
-    {
-
-    }
 
 
-    
-
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
         if (timer > spawnDelay)
         {
-            GameObject carInstans = Instantiate(enemyCars[Random.Range(0, enemyCars.Length - 1)],transform);
-            carInstans.transform.position = new Vector3(playerCar.transform.position.x-zDistanceFromCar,playerCar.transform.position.y,Random.Range(-20,19));
-            carInstans.AddComponent<EnemyCarController>();
-            carInstans.transform.localScale = playerCar.transform.localScale;
-            timer = 0;
+            InstantiateCar();
         }
+    }
+    
+    void InstantiateCar()
+    {
+        //instatiate a car by picking a random car from enemyCars array 
+        GameObject carInstans = Instantiate(enemyCars[Random.Range(0, enemyCars.Length - 1)], transform);
+        //setting the distance for the car from the player + giving the car a random position on the zAxis
+        carInstans.transform.position = new Vector3(playerCar.transform.position.x - xDistanceFromCar, playerCar.transform.position.y, Random.Range(-20, 19));
+        //adds The Controller Script for enemyCars to make the car move etc.
+        carInstans.AddComponent<EnemyCarController>();
+        //scale the car so that it's as big as the players car.
+        carInstans.transform.localScale = playerCar.transform.localScale;
+        //reset the timer
+        timer = 0;
     }
 }
