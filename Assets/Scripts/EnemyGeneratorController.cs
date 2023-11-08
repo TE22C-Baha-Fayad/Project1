@@ -18,6 +18,7 @@ public class EnemyGeneratorController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        // if the timer is bigger than spawndelay then instantiate a car
         if (timer > spawnDelay)
         {
             InstantiateCar();
