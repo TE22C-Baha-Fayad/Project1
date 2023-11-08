@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class EnemyCarController : MonoBehaviour
 {
+    //explosion effect vfx gameobject
+    public static GameObject explosionEffect;
     //the speed of enemy cars
     float speed = 100;
     //the counter for cars destroyed
@@ -38,6 +40,11 @@ public class EnemyCarController : MonoBehaviour
     {
           
        // if collisions tag is ball then destroy the ball and the car and increase the cars Destoryed counter
+        if(collision.gameObject.tag == "Ball" || collision.gameObject.tag == "Player")
+        {
+           GameObject explosionInstans = Instantiate(explosionEffect,transform.position,Quaternion.identity);
+            Destroy(explosionInstans,1);
+        }
         if (collision.gameObject.tag == "Ball")
         {
             Destroy(gameObject);
